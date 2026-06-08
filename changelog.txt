@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------------------------------
+Version: 1.0.0
+Date: 2026-06-08
+  Features:
+    - stop Tellus science packs from spoiling with configurable rebalance ([#1](https://github.com/derekbassett/tellus-science-rebalance/issues/1))
