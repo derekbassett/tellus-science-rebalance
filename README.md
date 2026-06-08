@@ -1,83 +1,85 @@
-[![Release](https://github.com/fgardt/factorio-mod-template/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/fgardt/factorio-mod-template/actions/workflows/release.yml)
-<!--                           ^======[REPLACE THIS]======^                                                                          ^======[REPLACE THIS]======^  -->
+[![Release](https://github.com/derekbassett/tellus-science-rebalance/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/derekbassett/tellus-science-rebalance/actions/workflows/release.yml)
 
-# factorio-mod-template
+# Tellus Science Rebalance
 
-A small Factorio Mod template which also contains GitHub Actions for automatic changelog generation, packaging and releasing to the [Factorio Mod Portal](https://mods.factorio.com)
+A small companion mod for [Planetaris: Tellus](https://mods.factorio.com/mod/planetaris-tellus)
+that makes its science packs **stop spoiling**, in exchange for a higher crafting
+cost. It follows the same pattern as
+[Gleba Science Rebalance](https://mods.factorio.com/mod/gleba-science-rebalance).
 
-# How it works
+## Why this mod exists
 
-This template uses [semantic-release](https://github.com/semantic-release/semantic-release) to automate the changelog generation aswell as packaging and releasing of the mod. \
-To achieve this it analyzes your commit messages to figure out what the new version should be and what to put into the changelog.
-Packaging and releasing to the factorio mod portal is done with [this plugin](https://github.com/fgardt/semantic-release-factorio). \
-Additionally the GitHub Action will also create a release in your repository on GitHub itself.
+Tellus uses **spoilage** as a core mechanic, and its science packs spoil too. The
+base mod ships an easy mode that reduces spoilage time, but after several days
+playing with it I still found keeping science fresh and flowing to be more of a
+logistics headache than a fun challenge.
 
-Once you push new commits to the main branch the release action will trigger. \
-First it will analyze all commits since the last release (determined from the last tag) to figure out if a new version should be released and what version it should be. \
-To make this possible you need to follow a commit message convention. The default convention this template uses is [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) with the following types:
+This mod is meant to be run **alongside** Planetaris: Tellus. It removes the
+spoilage timer from Tellus's science packs so you can buffer, ship, and store
+them like any other science pack — without the constant race against the clock.
 
-| Commit type                 | Changelog section |
-| --------------------------- | ----------------- |
-| `feat` or `feature`         | `Features`        |
-| `fix`                       | `Bugfixes`        |
-| `perf` or `performance`     | `Optimizations`   |
-| `compat` or `compatibility` | `Compatibility`   |
-| `balance`                   | `Balancing`       |
-| `graphics`                  | `Graphics`        |
-| `sound`                     | `Sounds`          |
-| `gui`                       | `Gui`             |
-| `info`                      | `Info`            |
-| `locale`                    | `Locale`          |
-| `translate`                 | `Translation`     |
-| `control`                   | `Control`         |
-| `other`                     | `Changes`         |
+## What it changes
 
-Because a push to the main branch triggers the release action it is recommended to work on a separate branch until your work is done and then merge that branch into main to release it. \
-_Or you just work locally and if you want to release you push your changes to main, up to you how you want to do it ;)_
+It affects the two Tellus science packs:
 
-# How to use
+- **Bioengineering Science Pack**
+- **Pathological Science Pack**
 
-## Repository setup
+For each one:
 
-Click the `Use this template` button and create your own repository.
+- **No more spoilage** — the spoil timer is removed, so the packs keep
+  indefinitely.
+- **Longer crafting time** — the recipe takes longer to craft (2× by default).
+- **Higher ingredient cost** — recipes require more inputs (2× by default).
 
-Once you have your new repository you need to add a Factorio token as a GitHub Actions secret so that the mod releasing can work. \
-To get the token go to [Factorio's website](https://factorio.com/login) and login with your account. \
-Then you need to go to your [profile](https://factorio.com/profile) and generate a new API key. \
-The API key needs `Upload Mods`, `Publish Mods` and `Edit Mods` permissions. Copy the generated key.
+The idea is to trade the spoilage pressure for a straightforward resource and
+throughput cost, so Tellus stays meaningfully expensive without the timer
+micromanagement.
 
-Now you need to go to your repository settings > `Secrets and variables` > `Actions` and add a new Repository secret called `FACTORIO_TOKEN` with your copied key as the secret.
+## Settings
 
-## Mod setup
+Both multipliers are configurable under **Settings → Mod settings → Startup**:
 
-- Swap out the [`LICENSE`](LICENSE) to your own liking _**(especially change out my name for yours)**_
-- Populate the [`info.json`](info.json) file with correct values _(the `version` field gets updated automatically)_
-- Add the corresponding text into [`locale.cfg`](locale/en/locale.cfg)
-- Add a `thumbnail.png` to the root of the repository
+- **Ingredient cost multiplier** (default `2`, range `1`–`10`) — scales each
+  recipe's ingredient amounts. Item amounts are rounded up to whole numbers;
+  fluids may be fractional.
+- **Crafting time multiplier** (default `2`, range `1`–`10`) — scales each
+  recipe's crafting time.
 
-More details about a mods structure can be found in the [documentation](https://lua-api.factorio.com/latest/auxiliary/mod-structure.html).
+Set both to `1` if you only want to remove spoilage with no extra cost. Because
+these are startup settings, changing them requires a game restart.
 
-# Misc
+## Installation
 
-## How the packaging works
+1. Install [Planetaris: Tellus](https://mods.factorio.com/mod/planetaris-tellus)
+   (this mod depends on it).
+2. Install this mod.
+3. Enable both and start or load a save.
 
-The [`semantic-release-factorio` plugin](https://github.com/fgardt/semantic-release-factorio) uses the `git archive` command to package the mod. \
-That way you can specify what folders / files to exclude from your packaged mod by specifying them in [`.gitattributes`](.gitattributes).
+**Requirements**
 
-If you want to locally test packaging of your mod you can run the following command:
-```sh
-git archive --format zip --prefix [YOUR-MOD-NAME]/ --worktree-attributes --output [YOUR-MOD-NAME]_[VERSION].zip HEAD
-```
+- Factorio 2.0 with the Space Age expansion
+- `planetaris-tellus >= 1.1.6`
 
-## Changing the commit message convention
+## Compatibility
 
-If you want to change the commit message convention you can do so by changing the 2 `preset` fields in the [`.releaserc`](.releaserc) file. \
-Possible presets are: [`angular`](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular), [`atom`](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-atom), [`codemirror`](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-codemirror), [`ember`](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-ember), [`eslint`](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-eslint), [`express`](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-express), [`jquery`](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-jquery), [`jshint`](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-jshint), [`conventionalcommits`](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-conventionalcommits).
+This mod only edits the two Tellus science pack recipes and their spoilage
+settings, so it should play nicely with most other mods. The easy mode included
+in Planetaris: Tellus is still optional — this mod replaces the need for it as
+far as science packs are concerned.
 
-Additionally you also need to modify the worflow file [`.github/workflows/release.yml`](.github/workflows/release.yml) to use the package that corresponds to your chosen preset. \
-Replace `conventional-changelog-conventionalcommits` with `conventional-changelog-[YOUR PRESET]` accordingly.
+## Credits & thanks
 
-## Need help?
+Huge thanks to [Syen_ce](https://mods.factorio.com/user/Syen_ce) for the
+excellent Planetaris: Tellus and their other amazing mods. All the hard creative
+work of Tellus is theirs; this is just a small rebalance tweak on top of it.
 
-Checkout the [official Factorio Discord](https://discord.gg/factorio) and check the `#mod-dev-guide` channel. \
-There is also the [Lua API documentation](https://lua-api.factorio.com/latest/) and the [modding section in the wiki](https://wiki.factorio.com/Modding).
+## Note
+
+This is my first published Factorio mod, used as a test bed for learning the
+publishing workflow. Feedback and suggestions are welcome. If there's interest, I
+may bundle a few of these rebalance tweaks into a mod pack.
+
+## License
+
+See [LICENSE](LICENSE).
