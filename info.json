@@ -1,18 +1,20 @@
 {
-  "name": "[internal-mod-name]",
+  "name": "tellus-science-rebalance",
   "version": "0.0.0",
-  "title": "[MOD DISPLAY NAME]",
-  "author": "[YOUR MODS.FACTORIO.COM USERNAME]",
-  "homepage": "[HOMEPAGE/REPO URL]",
-  "description": "[SHORT DESCRIPTION]",
+  "title": "○🌐Planetaris: Tellus Science Rebalance",
+  "author": "TheDreadPirate",
+  "homepage": "https://github.com/derekbassett/tellus-science-rebalance",
+  "description": "A companion rebalance for Planetaris: Tellus that stops its science packs from spoiling, in exchange for a higher recipe cost and a longer crafting time. Less spoilage micromanagement, more fun.",
   "factorio_version": "2.0",
   "dependencies": [
-    "base"
+    "base",
+    "space-age >= 2.0.0",
+    "planetaris-tellus"
   ],
   "quality_required": false,
   "rail_bridges_required": false,
   "space_travel_required": false,
-  "spoiling_required": false,
+  "spoiling_required": true,
   "freezing_required": false,
   "segmented_units_required": false,
   "expansion_shaders_required": false
