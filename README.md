@@ -58,8 +58,11 @@ these are startup settings, changing them requires a game restart.
 
 **Requirements**
 
-- Factorio 2.0 with the Space Age expansion
-- `planetaris-tellus >= 1.1.6`
+- Factorio 2.1 with the Space Age expansion
+- `planetaris-tellus >= 1.1.16`
+
+Playing on Factorio 2.0? Use the 1.x releases of this mod; the mod portal
+will pick the right one for your game version automatically.
 
 ## Compatibility
 
