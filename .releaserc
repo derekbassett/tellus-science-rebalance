@@ -1,6 +1,7 @@
 {
     "branches": [
-        "main"
+        "main",
+        { "name": "1.x", "range": "1.x" }
     ],
     "plugins": [
         [
